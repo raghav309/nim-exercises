@@ -4,8 +4,17 @@ type NodeRef = ref object
   prev: NodeRef
 
 type DLLRef = ref object
-    length: int
+    length: uint
     head:   NodeRef
+
+proc insert_head(list: DLLRef, value: int) =
+    let new_node_ref = NodeRef(val: value, next: list.head, prev: nil)
+
+    if list.head != nil: 
+        list.head.prev = new_node_ref
+    
+    list.head = new_node_ref
+    list.length += 1
 
 proc insert_node(list: DLLRef, value: int) =
     var temp_head = list.head
