@@ -1,14 +1,14 @@
-type NodeRef = ref object
+type ListNodeRef = ref object
   val:  int
-  next: NodeRef
-  prev: NodeRef
+  next: ListNodeRef
+  prev: ListNodeRef
 
-type DLLRef = ref object
+type ListRef = ref object
     length: uint
-    head:   NodeRef
+    head:   ListNodeRef
 
-proc insert_head(list: DLLRef, value: int) =
-    let new_node_ref = NodeRef(val: value, next: list.head, prev: nil)
+proc insert_head(list: ListRef, value: int) =
+    let new_node_ref = ListNodeRef(val: value, next: list.head, prev: nil)
 
     if list.head != nil: 
         list.head.prev = new_node_ref
@@ -16,9 +16,9 @@ proc insert_head(list: DLLRef, value: int) =
     list.head = new_node_ref
     list.length += 1
 
-proc insert_node(list: DLLRef, value: int) =
+proc insert_node(list: ListRef, value: int) =
     var temp_head = list.head
-    let new_node_ref = NodeRef(val: value, next: nil, prev: nil)
+    let new_node_ref = ListNodeRef(val: value, next: nil, prev: nil)
 
     if list.length == 0:
         list.head = new_node_ref
@@ -31,16 +31,16 @@ proc insert_node(list: DLLRef, value: int) =
     
     list.length += 1
 
-proc print_dll(list: DLLRef) =
+proc print_dll(list: ListRef) =
     if list.length < 0: return
 
-    var tempHead: NodeRef = list.head
+    var tempHead: ListNodeRef = list.head
     while tempHead != nil:
         echo(tempHead.val)
         tempHead = tempHead.next
 
 
-var my_dll = DLLRef(length: 0, head: nil)
+var my_dll = ListRef(length: 0, head: nil)
 
 echo("length before insertions: ", my_dll.length)
 for i in countup(1, 9):
