@@ -1,50 +1,43 @@
-type ListNodeRef = ref object
-  val:  int
-  next: ListNodeRef
-  prev: ListNodeRef
+type ListNodeRef* = ref object
+    data: int
+    next: ListNodeRef
+    prev: ListNodeRef
 
-type ListRef = ref object
-    length: uint
-    head:   ListNodeRef
+type ListRef* = ref object
+    size: uint
+    front: ListNodeRef
 
-proc insert_head(list: ListRef, value: int) =
-    let new_node_ref = ListNodeRef(val: value, next: list.head, prev: nil)
+proc ListPrint*(list: ListRef) =
+    var listAsString: string
+    var tempFront = list.front
 
-    if list.head != nil: 
-        list.head.prev = new_node_ref
+    while tempFront != nil:
+        listAsString.add($tempFront.data & " ")
+        tempFront = tempFront.next
     
-    list.head = new_node_ref
-    list.length += 1
+    echo("List: ", listAsString)
 
-proc insert_node(list: ListRef, value: int) =
-    var temp_head = list.head
-    let new_node_ref = ListNodeRef(val: value, next: nil, prev: nil)
+proc ListInsertFront*(list: ListRef, data: int) =
+    var newNodeRef = ListNodeRef(data: data, next: nil, prev: nil)
 
-    if list.length == 0:
-        list.head = new_node_ref
+    if list.size != 0:
+        newNodeRef.next = list.front
+        list.front.prev = newNodeRef
+    
+    list.front = newNodeRef
+    list.size += 1
+
+proc ListInsertEnd*(list: ListRef, data: int) =
+    var newNodeRef = ListNodeRef(data: data, next: nil, prev: nil)
+    
+    if list.size == 0:
+        list.front = newNodeRef
     else:
-        while temp_head.next != nil:
-            temp_head = temp_head.next
-
-        new_node_ref.prev = temp_head
-        temp_head.next = new_node_ref
+        var tempFront = list.front
+        while tempFront.next != nil:
+            tempFront = tempFront.next
+        
+        tempFront.next = newNodeRef
+        newNodeRef.prev = tempFront
     
-    list.length += 1
-
-proc print_dll(list: ListRef) =
-    if list.length < 0: return
-
-    var tempHead: ListNodeRef = list.head
-    while tempHead != nil:
-        echo(tempHead.val)
-        tempHead = tempHead.next
-
-
-var my_dll = ListRef(length: 0, head: nil)
-
-echo("length before insertions: ", my_dll.length)
-for i in countup(1, 9):
-    insert_node(my_dll, i)
-echo("length before insertions: ", my_dll.length)
-
-print_dll(my_dll)
+    list.size += 1
