@@ -17,6 +17,12 @@ proc ListPrint*(list: ListRef) =
     
     echo("List: ", listAsString)
 
+
+proc ListInsertAt*(list: ListRef) = return
+proc ListInsertAfter*(list: ListRef) = return
+proc ListInsertBefore*(list: ListRef) = return
+
+
 proc ListInsertFront*(list: ListRef, data: int) =
     var newNodeRef = ListNodeRef(data: data, next: nil, prev: nil)
 
@@ -68,3 +74,7 @@ proc ListRemoveEnd*(list: ListRef) : ListNodeRef =
         
     list.size -= 1
     return tempFront  
+
+
+proc ListRemoveNode*(list: ListRef, node: ListNodeRef) : ListNodeRef= return
+proc ListRemoveAt*(list: ListRef, index: uint) : ListNodeRef = return
