@@ -41,3 +41,30 @@ proc ListInsertEnd*(list: ListRef, data: int) =
         newNodeRef.prev = tempFront
     
     list.size += 1
+
+
+proc ListRemoveFront*(list: ListRef) : ListNodeRef =
+    var tempFront = list.front 
+    
+    if tempFront != nil:
+        list.front = list.front.next
+        list.size -= 1
+    
+    return tempFront
+
+
+proc ListRemoveEnd*(list: ListRef) : ListNodeRef =
+    if list.size == 0: return nil
+    
+    var tempFront = list.front
+    
+    if list.size == 1:
+        list.front = nil
+    elif list.size > 1:
+        while tempFront.next != nil:
+            tempFront = tempFront.next
+
+        tempFront.prev.next = nil
+        
+    list.size -= 1
+    return tempFront  
