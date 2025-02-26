@@ -1,14 +1,21 @@
 import unittest
+import ../src/LinkedList
 
-proc add(a: int, b: int): int =
-    return a + b
+suite "LinkedList tests":
+    test "ListInsertFront":
+        check(false)
+    
+    test "ListInsertEnd":
+        check(false)
+    
+    test "ListInsertAt":
+        check(false)
 
-suite "Addition Tests":
-    test "Test adding positive numbers":
-        check add(2, 3) == 5
+    test "ListRemoveFront":
+        check(false)
 
-    test "Test adding negative numbers":
-        check add(-2, -3) == -5
+    test "ListRemoveEnd":
+        check(false)
 
-    test "Test adding zero":
-        check add(0, 5) == 5
+    test "ListRemoveAt":
+        check(false)
